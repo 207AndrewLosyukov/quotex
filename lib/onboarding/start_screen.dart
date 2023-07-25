@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quotex/quotex_button.dart';
 import 'package:quotex/quotex_colors.dart';
+import 'package:quotex/with_tab_bar/trade/registration/sign_up.dart';
 
 import '../with_tab_bar/switcher_screen.dart';
 
@@ -83,7 +84,8 @@ class StartScreen extends StatelessWidget {
                   callback: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const SwitcherScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => const SignUpScreen()),
                     );
                   },
                   textStyle: const TextStyle(

@@ -1,6 +1,12 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:quotex/main.dart';
 import 'package:quotex/quotex_colors.dart';
+import 'package:quotex/with_tab_bar/trade/registration/sign_up.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -129,7 +135,14 @@ class SettingsScreen extends StatelessWidget {
         SizedBox(
           height: 56,
           child: InkWell(
-            onTap: () => {},
+            onTap: () => {
+              showAlertDialog(
+                  context: context,
+                  title: "Вы уверены что хотите удалить?",
+                  content: "",
+                  cancelActionText: "Нет",
+                  defaultActionText: "Да"),
+            },
             child: Row(
               children: [
                 const Spacer(
@@ -183,5 +196,76 @@ class SettingsScreen extends StatelessWidget {
     if (!await launchUrl(_url)) {
       throw Exception('Could not launch $_url');
     }
+  }
+
+  Future<Future> showAlertDialog({
+    required BuildContext context,
+    required String title,
+    required String content,
+    required String cancelActionText,
+    required String defaultActionText,
+  }) async {
+    if (!Platform.isIOS) {
+      return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: <Widget>[
+            ElevatedButton(
+                child: Text(cancelActionText),
+                onPressed: () => {
+                      Navigator.of(context).pop(false),
+                    }),
+            ElevatedButton(
+                child: Text(defaultActionText),
+                onPressed: () => {
+                      Navigator.of(context).pop(true),
+                      Navigator.of(context).pop(true),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SignUpScreen()),
+                      ),
+                      userDefault!.setBool("isRememberedAndSignUp", false),
+                      Hive.box('history').clear(),
+                      Hive.box('balance').clear(),
+                    }),
+          ],
+        ),
+      );
+    }
+    return showCupertinoDialog(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: <Widget>[
+          CupertinoDialogAction(
+            child: Text(cancelActionText),
+            onPressed: () => {
+              Navigator.of(context).pop(false),
+            },
+          ),
+          CupertinoDialogAction(
+            child: Text(
+              defaultActionText,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            onPressed: () => {
+              Navigator.of(context).pop(true),
+              Navigator.of(context).pop(true),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SignUpScreen()),
+              ),
+              userDefault!.setBool("isRememberedAndSignUp", false),
+              Hive.box('history').clear(),
+              Hive.box('balance').clear(),
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quotex/dependencies.dart';
+import 'package:quotex/main.dart';
 import 'package:quotex/quotex_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:quotex/with_tab_bar/switcher_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -173,32 +175,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const Spacer(),
                     Expanded(
                       flex: 20,
-                      child: RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: AppLocalizations.of(context)!.iConfirm,
-                              style: const TextStyle(
-                                fontFamily: "Onest",
-                                fontWeight: FontWeight.w500,
-                                color:
-                                    Color(QuotexColors.quotexHistoryGreyCode),
-                                fontSize: 14,
-                              ),
-                            ),
-                            TextSpan(
-                              text: AppLocalizations.of(context)!
-                                  .serviceAgreement,
-                              style: const TextStyle(
-                                fontFamily: "Onest",
-                                fontWeight: FontWeight.w500,
-                                color: Color(
-                                  QuotexColors.quotexGreenCode,
-                                ),
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
+                      child: Text(
+                        AppLocalizations.of(context)!.rememberMe,
+                        style: const TextStyle(
+                          fontFamily: "Onest",
+                          fontWeight: FontWeight.w500,
+                          color: Color(QuotexColors.quotexHistoryGreyCode),
+                          fontSize: 14,
                         ),
                       ),
                     ),
@@ -212,25 +195,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 const Spacer(flex: 3),
                 InkWell(
                   onTap: () => {
-                    // открытие TradeScreen
+                    userDefault!.setBool("isRememberedAndSignUp", isTapped),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SwitcherScreen()),
+                    ),
                   },
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4),
-                      color: const Color(QuotexColors.quotexGreenCode)
-                          .withOpacity(isTapped ? 1 : 0.5),
+                      color: const Color(QuotexColors.quotexGreenCode),
                     ),
                     width: 312,
                     height: 56,
                     child: Center(
                       child: Text(
                         AppLocalizations.of(context)!.registration,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontFamily: "Onest",
                           fontWeight: FontWeight.w700,
-                          color: const Color(
+                          color: Color(
                             QuotexColors.quotexWhiteCode,
-                          ).withOpacity(isTapped ? 1 : 0.5),
+                          ),
                           fontSize: 16,
                         ),
                       ),
@@ -240,17 +227,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Padding(
                   padding: const EdgeInsets.only(
                     top: 9.5,
+                    bottom: 30,
                   ),
                   child: InkWell(
-                    onTap: () => Dependencies.instance.navigator.openSignInScreen(context),
+                    onTap: () => Dependencies.instance.navigator
+                        .openSignInScreen(context),
                     child: Text(
                       AppLocalizations.of(context)!.signIn,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: "Onest",
                         fontWeight: FontWeight.w700,
-                        color: const Color(
+                        color: Color(
                           QuotexColors.quotexGreenCode,
-                        ).withOpacity(isTapped ? 1 : 0.5),
+                        ),
                         fontSize: 16,
                       ),
                     ),

@@ -9,6 +9,7 @@ import 'package:quotex/onboarding/welcome_screen.dart';
 import 'package:quotex/with_tab_bar/trade/registration/change_password_.dart';
 import 'package:quotex/with_tab_bar/trade/registration/password_recovery_screen.dart';
 import 'package:quotex/with_tab_bar/trade/registration/sign_in.dart';
+import 'package:quotex/with_tab_bar/trade/registration/sign_up.dart';
 import 'package:quotex/with_tab_bar/trade/trade_screen.dart';
 import 'package:quotex/with_tab_bar/web_screen.dart';
 
@@ -70,6 +71,12 @@ class AppNavigator {
         MaterialPageRoute(
             builder: (context) => const PasswordRecoveryScreen(),
             maintainState: false),
+      );
+
+  openSignUpScreen(BuildContext buildContext) =>
+      Navigator.of(buildContext, rootNavigator: false).pushReplacement(
+        MaterialPageRoute(
+            builder: (context) => const SignUpScreen(), maintainState: false),
       );
 
   openSignInScreen(BuildContext buildContext) =>

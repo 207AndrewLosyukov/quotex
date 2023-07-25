@@ -21,8 +21,7 @@ class _PreloaderScreenState extends State<PreloaderScreen> {
       future: setUserDefaults(),
       builder: (context, data) {
         if (data.hasData) {
-          WidgetsBinding.instance.addPostFrameCallback((_) =>
-              _navFunc());
+          WidgetsBinding.instance.addPostFrameCallback((_) => _navFunc());
           return const Scaffold();
         }
 
@@ -79,10 +78,14 @@ class _PreloaderScreenState extends State<PreloaderScreen> {
       userDefault!.setBool('onboarding', true);
       Dependencies.instance.navigator.openWelcomeScreen();
     } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const SwitcherScreen()),
-      );
+      if (userDefault!.getBool('isRememberedAndSignUp') == true) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const SwitcherScreen()),
+        );
+      } else {
+        Dependencies.instance.navigator.openSignUpScreen(context);
+      }
     }
   }
 }

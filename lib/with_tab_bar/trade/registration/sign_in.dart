@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quotex/dependencies.dart';
+import 'package:quotex/main.dart';
 import 'package:quotex/quotex_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:quotex/with_tab_bar/switcher_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -191,19 +193,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
                     const Spacer(),
-                    InkWell(
-                      onTap: () => Dependencies.instance.navigator
-                          .openChangePasswordScreen(context),
-                      child: Text(
-                        AppLocalizations.of(context)!.forgotPassword,
-                        style: const TextStyle(
-                          fontFamily: "Onest",
-                          fontWeight: FontWeight.w500,
-                          color: Color(QuotexColors.quotexGreenCode),
-                          fontSize: 14,
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),
@@ -213,7 +202,9 @@ class _SignInScreenState extends State<SignInScreen> {
               children: [
                 const Spacer(flex: 3),
                 InkWell(
-                  onTap: () => {},
+                  onTap: () => {
+                    userDefault!.setBool("isRememberedAndSignUp", isTapped),
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4),
@@ -238,9 +229,12 @@ class _SignInScreenState extends State<SignInScreen> {
                 Padding(
                   padding: const EdgeInsets.only(
                     top: 9.5,
+                    bottom: 30,
                   ),
                   child: InkWell(
-                    onTap: () => {},
+                    onTap: () => {
+                      Dependencies.instance.navigator.openSignUpScreen(context),
+                    },
                     child: Text(
                       AppLocalizations.of(context)!.registration,
                       style: const TextStyle(

@@ -2,13 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:quotex/dependencies.dart';
 import 'package:quotex/quotex_colors.dart';
 import 'package:quotex/with_tab_bar/history/history_screen.dart';
 
 import 'package:quotex/with_tab_bar/settings_screen.dart';
 import 'package:quotex/with_tab_bar/scanner/scanner_cubit.dart';
 import 'package:quotex/with_tab_bar/scanner/scanner_screen.dart';
-import 'package:quotex/with_tab_bar/trade/registration/sign_up.dart';
+import 'package:quotex/with_tab_bar/trade/trade_screen.dart';
 
 import '../main.dart';
 
@@ -25,7 +26,20 @@ class SwitcherScreenState extends State<SwitcherScreen> {
   Widget getData(index, context) {
     switch (index) {
       case 0:
-      return const SignUpScreen();
+        return FutureBuilder(
+          future: Dependencies.instance.getBalance(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return TradeScreen(
+                balance: snapshot.data,
+              );
+            }
+          },
+        );
       case 1:
         return BlocProvider(
           create: (_) {
@@ -81,7 +95,7 @@ class SwitcherScreenState extends State<SwitcherScreen> {
                 ),
                 label: AppLocalizations.of(context)!.scanner,
               ),
-              if (userDefault!.getInt('status') == 0)
+              // if (userDefault!.getInt('status') == 0)
                 BottomNavigationBarItem(
                   icon: Image.asset(
                     "assets/inactive_history.png",
@@ -95,7 +109,7 @@ class SwitcherScreenState extends State<SwitcherScreen> {
                   ),
                   label: AppLocalizations.of(context)!.history,
                 ),
-              if (userDefault!.getInt('status') == 0)
+              // if (userDefault!.getInt('status') == 0)
                 BottomNavigationBarItem(
                   icon: Image.asset(
                     "assets/inactive_settings.png",
