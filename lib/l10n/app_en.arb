@@ -73,5 +73,8 @@
     "done": "Done",
     "checkYourEmail": "Check your email. We have sent you a link so that you can restore access to your account and change your password.",
     "passwordRecovery": "Password recovery",
-    "deleteAccount": "Delete Account"
+    "deleteAccount": "Delete Account",
+    "deleteAlertTitle": "Are you sure you want to delete?",
+    "deleteAlertYes": "Yes",
+    "deleteAlertNo": "No"
 }

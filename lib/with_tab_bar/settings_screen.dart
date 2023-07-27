@@ -138,10 +138,12 @@ class SettingsScreen extends StatelessWidget {
             onTap: () => {
               showAlertDialog(
                   context: context,
-                  title: "Вы уверены что хотите удалить?",
+                  title: AppLocalizations.of(context)!.deleteAlertTitle,
                   content: "",
-                  cancelActionText: "Нет",
-                  defaultActionText: "Да"),
+                  cancelActionText:
+                      AppLocalizations.of(context)!.deleteAlertYes,
+                  defaultActionText:
+                      AppLocalizations.of(context)!.deleteAlertNo),
             },
             child: Row(
               children: [

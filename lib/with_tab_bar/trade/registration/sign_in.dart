@@ -161,7 +161,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           ? const Icon(
                               Icons.check_box_rounded,
                               size: 24.0,
-                              color: Color(QuotexColors.quotexGreyRegistration),
+                              color: Color(QuotexColors.quotexGreenCode),
                             )
                           : Container(
                               height: 24,
@@ -204,6 +204,17 @@ class _SignInScreenState extends State<SignInScreen> {
                 InkWell(
                   onTap: () => {
                     userDefault!.setBool("isRememberedAndSignUp", isTapped),
+                    if (userDefault!.containsKey(emailController.text))
+                      {
+                        if (userDefault!.get(emailController.text) == passwordController.text)
+                          {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SwitcherScreen()),
+                            )
+                          }
+                      }
                   },
                   child: Container(
                     decoration: BoxDecoration(

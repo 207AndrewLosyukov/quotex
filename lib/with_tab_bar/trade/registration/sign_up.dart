@@ -156,25 +156,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 padding: const EdgeInsets.only(top: 16.0),
                 child: Row(
                   children: [
-                    Flexible(
-                      child: InkWell(
-                        child: Icon(
-                          Icons.check_box_rounded,
-                          size: 24.0,
-                          color: isTapped
-                              ? const Color(QuotexColors.quotexGreyRegistration)
-                              : const Color(QuotexColors.quotexGreenCode),
-                        ),
-                        onTap: () {
-                          setState(
-                            () => isTapped = !isTapped,
-                          );
-                        },
-                      ),
+                    InkWell(
+                      child: isTapped
+                          ? const Icon(
+                              Icons.check_box_rounded,
+                              size: 24.0,
+                              color: Color(QuotexColors.quotexGreenCode),
+                            )
+                          : Container(
+                              height: 24,
+                              width: 24,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 1,
+                                    color: const Color(
+                                        QuotexColors.quotexGreyRegistration)),
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                            ),
+                      onTap: () {
+                        setState(
+                          () => isTapped = !isTapped,
+                        );
+                      },
                     ),
-                    const Spacer(),
-                    Expanded(
-                      flex: 20,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
                       child: Text(
                         AppLocalizations.of(context)!.rememberMe,
                         style: const TextStyle(
@@ -185,6 +192,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                     ),
+                    const Spacer(),
                   ],
                 ),
               ),
@@ -192,15 +200,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Spacer(flex: 3),
+                const Spacer(
+                  flex: 3,
+                ),
                 InkWell(
                   onTap: () => {
+                    userDefault!.setString(
+                        emailController.text, passwordController.text),
                     userDefault!.setBool("isRememberedAndSignUp", isTapped),
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SwitcherScreen()),
-                    ),
                   },
                   child: Container(
                     decoration: BoxDecoration(
