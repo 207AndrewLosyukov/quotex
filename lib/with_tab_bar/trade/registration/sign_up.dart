@@ -208,6 +208,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     userDefault!.setString(
                         emailController.text, passwordController.text),
                     userDefault!.setBool("isRememberedAndSignUp", isTapped),
+                    userDefault!.setString("currentUser", emailController.text),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SwitcherScreen()),
+                    )
                   },
                   child: Container(
                     decoration: BoxDecoration(

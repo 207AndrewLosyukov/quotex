@@ -137,13 +137,12 @@ class SettingsScreen extends StatelessWidget {
           child: InkWell(
             onTap: () => {
               showAlertDialog(
-                  context: context,
-                  title: AppLocalizations.of(context)!.deleteAlertTitle,
-                  content: "",
-                  cancelActionText:
-                      AppLocalizations.of(context)!.deleteAlertYes,
-                  defaultActionText:
-                      AppLocalizations.of(context)!.deleteAlertNo),
+                context: context,
+                title: AppLocalizations.of(context)!.deleteAlertTitle,
+                content: "",
+                cancelActionText: AppLocalizations.of(context)!.deleteAlertNo,
+                defaultActionText: AppLocalizations.of(context)!.deleteAlertYes,
+              ),
             },
             child: Row(
               children: [
@@ -215,11 +214,6 @@ class SettingsScreen extends StatelessWidget {
           content: Text(content),
           actions: <Widget>[
             ElevatedButton(
-                child: Text(cancelActionText),
-                onPressed: () => {
-                      Navigator.of(context).pop(false),
-                    }),
-            ElevatedButton(
                 child: Text(defaultActionText),
                 onPressed: () => {
                       Navigator.of(context).pop(true),
@@ -230,8 +224,16 @@ class SettingsScreen extends StatelessWidget {
                             builder: (context) => const SignUpScreen()),
                       ),
                       userDefault!.setBool("isRememberedAndSignUp", false),
+                      userDefault!
+                          .remove(userDefault!.getString("currentUser")!),
+                      userDefault!.remove("currentUser"),
                       Hive.box('history').clear(),
                       Hive.box('balance').clear(),
+                    }),
+            ElevatedButton(
+                child: Text(cancelActionText),
+                onPressed: () => {
+                      Navigator.of(context).pop(false),
                     }),
           ],
         ),
@@ -244,16 +246,7 @@ class SettingsScreen extends StatelessWidget {
         content: Text(content),
         actions: <Widget>[
           CupertinoDialogAction(
-            child: Text(cancelActionText),
-            onPressed: () => {
-              Navigator.of(context).pop(false),
-            },
-          ),
-          CupertinoDialogAction(
-            child: Text(
-              defaultActionText,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
+            child: Text(defaultActionText),
             onPressed: () => {
               Navigator.of(context).pop(true),
               Navigator.of(context).pop(true),
@@ -262,8 +255,19 @@ class SettingsScreen extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const SignUpScreen()),
               ),
               userDefault!.setBool("isRememberedAndSignUp", false),
+              userDefault!.remove(userDefault!.getString("currentUser")!),
+              userDefault!.remove("currentUser"),
               Hive.box('history').clear(),
               Hive.box('balance').clear(),
+            },
+          ),
+          CupertinoDialogAction(
+            child: Text(
+              cancelActionText,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            onPressed: () => {
+              Navigator.of(context).pop(false),
             },
           ),
         ],

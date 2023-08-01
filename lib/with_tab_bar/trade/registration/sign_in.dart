@@ -206,8 +206,11 @@ class _SignInScreenState extends State<SignInScreen> {
                     userDefault!.setBool("isRememberedAndSignUp", isTapped),
                     if (userDefault!.containsKey(emailController.text))
                       {
-                        if (userDefault!.get(emailController.text) == passwordController.text)
+                        if (userDefault!.get(emailController.text) ==
+                            passwordController.text)
                           {
+                            userDefault!
+                                .setString("currentUser", emailController.text),
                             Navigator.push(
                               context,
                               MaterialPageRoute(
