@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quotex/dependencies.dart';
@@ -217,6 +220,25 @@ class _SignInScreenState extends State<SignInScreen> {
                                   builder: (context) => const SwitcherScreen()),
                             )
                           }
+                        else
+                          {
+                            showAlertDialog(
+                                context: context,
+                                title: AppLocalizations.of(context)!
+                                    .incorrectPassword,
+                                content: "",
+                                cancelActionText:
+                                    AppLocalizations.of(context)!.ok)
+                          }
+                      }
+                    else
+                      {
+                        showAlertDialog(
+                            context: context,
+                            title:
+                                AppLocalizations.of(context)!.userDoesntExist,
+                            content: "",
+                            cancelActionText: AppLocalizations.of(context)!.ok)
                       }
                   },
                   child: Container(
@@ -266,6 +288,48 @@ class _SignInScreenState extends State<SignInScreen> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Future<Future> showAlertDialog({
+    required BuildContext context,
+    required String title,
+    required String content,
+    required String cancelActionText,
+  }) async {
+    if (!Platform.isIOS) {
+      return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: <Widget>[
+            ElevatedButton(
+                child: Text(cancelActionText),
+                onPressed: () => {
+                      Navigator.of(context).pop(false),
+                    }),
+          ],
+        ),
+      );
+    }
+    return showCupertinoDialog(
+      context: context,
+      builder: (context) => CupertinoAlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: <Widget>[
+          CupertinoDialogAction(
+            child: Text(
+              cancelActionText,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            onPressed: () => {
+              Navigator.of(context).pop(false),
+            },
+          ),
+        ],
       ),
     );
   }

@@ -76,5 +76,8 @@
     "deleteAccount": "Delete Account",
     "deleteAlertTitle": "Are you sure you want to delete?",
     "deleteAlertYes": "Yes",
-    "deleteAlertNo": "No"
+    "deleteAlertNo": "No",
+    "userDoesntExist": "User with this login doesn't exist",
+    "incorrectPassword": "Incorrect password",
+    "ok": "OK"
 }
